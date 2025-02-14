@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Gift</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: pink;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .card {
+            width: 200px;
+            height: 120px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+        .flipped {
+            transform: rotateY(180deg);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="card" class="card" onclick="flipCard()">
+        <p id="front">Нажми, чтобы открыть</p>
+        <p id="back" class="hidden">Любимый, я тебя люблю!</p>
+    </div>
+    <button id="next1" class="hidden" onclick="showReasons()">Дальше</button>
+    
+    <div id="reasons" class="hidden">
+        <p id="reasonText"></p>
+        <button onclick="nextReason()">Следующая причина</button>
+        <button id="toPlayer" class="hidden" onclick="showPlayer()">К плееру</button>
+    </div>
+    
+    <div id="player" class="hidden">
+        <audio controls>
+            <source src="your-song.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script>
+        let flipped = false;
+        let reasonIndex = 0;
+        const reasons = [
+            "Ты заботливый",
+            "Ты смешной",
+            "Ты поддерживаешь меня",
+            "Ты самый лучший"
+        ];
+        
+        function flipCard() {
+            document.getElementById('card').classList.toggle('flipped');
+            document.getElementById('front').classList.toggle('hidden');
+            document.getElementById('back').classList.toggle('hidden');
+            document.getElementById('next1').classList.remove('hidden');
+        }
+        
+        function showReasons() {
+            document.getElementById('card').classList.add('hidden');
+            document.getElementById('next1').classList.add('hidden');
+            document.getElementById('reasons').classList.remove('hidden');
+            document.getElementById('reasonText').textContent = reasons[reasonIndex];
+        }
+        
+        function nextReason() {
+            reasonIndex++;
+            if (reasonIndex < reasons.length) {
+                document.getElementById('reasonText').textContent = reasons[reasonIndex];
+            } else {
+                document.getElementById('toPlayer').classList.remove('hidden');
+            }
+        }
+        
+        function showPlayer() {
+            document.getElementById('reasons').classList.add('hidden');
+            document.getElementById('player').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
